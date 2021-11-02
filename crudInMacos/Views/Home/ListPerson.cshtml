@@ -85,12 +85,13 @@
 
     function refreshMe() {
         readRecord();
+        $("#search").val("");
     }
 
     function emptyTemplate() {
         return "" +
             "<tr>" +
-            "<td colspan='4'>It's lonely her</td>" +
+            "<td colspan='4'>It's lonely here</td>" +
             "</tr>";
     }
 
@@ -197,12 +198,17 @@
             }, success: function (response) {
                 const data = response;
                 if (data.status) {
-                    if (data.data.length > 0) {
-                        let templateStringBuilder = "";
-                        for (let i = 0; i < data.data.length; i++) {
-                            templateStringBuilder += template(data.data[i].personId, data.data[i].name, data.data[i].age);
+                    console.log(data.data);
+
+                    if (typeof data.data !== "undefined") {
+                        if (data.data.length > 0) {
+                            let templateStringBuilder = "";
+                            for (let i = 0; i < data.data.length; i++) {
+                                templateStringBuilder += template(data.data[i].personId, data.data[i].name, data.data[i].age);
+                            }
+                            tbody.html("").html(templateStringBuilder);
                         }
-                        tbody.html("").html(templateStringBuilder);
+                        console.log(data.data);
                     } else {
                         tbody.html("").html(emptyTemplate());
                     }
